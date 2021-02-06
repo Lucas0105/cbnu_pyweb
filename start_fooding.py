@@ -1,4 +1,4 @@
-from helloflask import app
+from fooding import app
 
 app.run(host='0.0.0.0') #local host == 127.0.0.1
 
