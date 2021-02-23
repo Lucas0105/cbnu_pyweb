@@ -2,10 +2,29 @@
 <html lang="en">
 
 <head>
+
+  <!--
+  meta
+  name 특성을 지정하면 전체 페이지에 적용되는 "문서 레벨 메타데이터"를 제공
+  http-equiv 특성을 지정하면 유사한 이름의 HTTP 헤더가 제공하는 정보와 동일한 "프래그마 지시문"이 됨
+  charset 특성을 지정하면 문서 인코딩에 사용한 문자 인코딩을 나타내는 "문자 집합 선언"이 됨
+  itemprop 특성을 지정하면 "사용자 정의 메타데이터"를 제공-->
   <meta charset="utf-8">
+
+  <!--name  = viewport는 화면 해상도와 크기를 조절
+    content="with=device-with 웹페이지의 크기가 모니터의 실제 크기를 따라가도록 만든 설절
+    initial-cale은 페이지가 처음 로드될 때 줌 레벨을 조정 스마트폰에서만 효과가 있음
+    shrink-to-fit=no 애플 사파리 11버전에서 viewport 크기가 보여줘야할 내용보다 작으면 내용을 줄여서 no로 줄임을 방지-->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!--x-ua-compatible 호환성보기를 무시해줌 ie=edge 모든 IE 브라우저의 호환성보기 무시-->
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+
+  <!--제목-->
   <title>Fooding data</title>
+
+  <!--<link> 태그의 rel 속성은 현재 문서와 외부 리소스 사이의 연관 관계를 명시 스타일 시트(stylesheet)로 사용할 외부 리소스를 불러옴.-->
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
@@ -20,9 +39,17 @@
 
   <!--Main Navigation-->
   <header>
-
+    <!--
+        <nav> 요소는 문서의 부분 중 현재 페이지 내, 또는 다른 페이지로의 링크를 보여주는 구획 자주 쓰이는 예제는 메뉴, 목차, 색인
+        fixed-bottom 하단에 고정 fixed-top 상단에 고정
+        navbar-expand-lg 큰 화면 일때 네비바 메뉴가 숨고 이상일 때 펼쳐진다는 뜻
+        navbar-light 는 네비바의 글자색을 의미
+        bg-light 는 네비바의 background-color 를 의미
+        색상 primary, secondary, success, dangerm warning, info, light, dark, white
+        scrolling-navbar 스크롤 했을 시 내비바 효과
+      -->
     <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white scrolling-navbar">
       <div class="container">
 
         <!-- Brand -->
@@ -44,7 +71,7 @@
             <li class="nav-item active">
               
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link waves-effect" href="#magazine">About MDB</a>
             </li>
             <li class="nav-item">
@@ -54,7 +81,7 @@
             <li class="nav-item">
               <a class="nav-link waves-effect" href="https://mdbootstrap.com/education/bootstrap/" target="_blank">Free
                 tutorials</a>
-            </li> -->
+            </li>
           </ul>
 
           
