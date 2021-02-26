@@ -47,26 +47,14 @@
         scrolling-navbar 스크롤 했을 시 내비바 효과
       -->
 
-      <!--logo-->
-      <div class = "container-fluid fooding">
-    <div class ="row">
-      <div class ="col-sm-4 text-center"></div> 
-      <div class ="col-sm-4 text-center">
-        <a href="home-page.html">
-          <img src="../fooding/static/img/f_logo.png" alt="logo" style= margin-top:100px;>
-        </a>
-      </div> 
-      <div class ="col-sm-4 text-center"></div> 
-    </div>
-    
-      </div>
-
+     
     <!-- Navbar -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white scrolling-navbar">
       <div class="container">
 
         <!-- Brand -->
         <a class="navbar-brand waves-effect" href="#" target="_blank">
+          <strong class="blue-text">Fooding</strong>
         </a>
 
         <!-- Collapse -->
@@ -138,10 +126,34 @@
   <!--Main Navigation-->
 
   <!--Main layout-->
+  <div class="container">
   <main class="mt-5 pt-5">
-    <div class="container">
+    
+ <!--logo-->
+ <div class = "container-fluid fooding">
+  <div class ="row">
+    <div class ="col-sm-4 text-center"></div> 
+    <div class ="col-sm-4 text-center">
+      <a href="home-page.html">
+        <img src="../fooding/static/img/f_logo.png" alt="logo">
+      </a>
+    </div> 
+    <div class ="col-sm-4 text-center"></div> 
+  </div>
+</div>
+<!--logo-->
 
-     
+  <div style="position: relative; margin-bottom: 50px;">
+    <a>
+      <i class="fas fa-toggle-off fa-3x" style=" float: right; margin-right: 75px;"></i>
+    </a>
+    <br>
+    <br>
+
+    <h5 style="float:right; margin-right: 50px"><strong>위치서비스</strong></h5>
+    <!-- <i class="fas fa-toggle-on fa-3x"></i> -->
+ </div>
+
 
       <!-- <hr class="my-5"> -->
 
@@ -149,103 +161,125 @@
       <section id="magazine" class="wow fadeIn">
 
         <!--Section heading-->
+          <h3>
+              <div class="text-primary">
+                <strong>추천 메뉴</strong>
+              </div>
+          </h3>
 
-        <h3>
-          <a>
-            <strong class= "primary">추천 메뉴</strong>
-          </a>
-        </h3>
+  <!-- 추천메뉴 row -->
 
-    <!-- 추천메뉴 row -->
+  <div class="row">
+    <div class="col-md-4 mb-5">
+      <div class="card h-100">
+        <a href="#" >
+        <img class="card-img-top" src="static/img/food/crople.jpg" alt="" height="300">
+        <div class="card-body">
+          <h4 class="card-title">#스타벅스</h4>
+          <p class="card-text">맛있는 와플</p>
+        </div>
 
-    <div class="row">
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <img class="card-img-top" src="static/img/food/crople.jpg" alt="" height="250">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Find Out More!</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <img class="card-img-top" src="static/img/food/donggas.png" alt="" height="250">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Find Out More!</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-5">
-        <div class="card h-100">
-          <img class="card-img-top" src="static/img/food/pasta.jpg" alt="" height="250">
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Find Out More!</a>
-          </div>
-        </div>
+        <!--<div class="card-footer">
+          <a href="#" class="btn btn-primary">Find Out More!</a>
+        </div> -->
+
+        </a>
       </div>
     </div>
-    <!-- 추천메뉴 row -->
-        <br><br><br>
-        
-    <!-- 추천카페 row -->
-        <h3>
-          <a>
-            <strong>추천 카페</strong>
-          </a>
-        </h3>
-        <!--Grid row-->
-        <div class="row">
-          <div class="col-md-4 mb-5">
-            <div class="card h-100">
-              <img class="card-img-top" src="static/img/food/crople.jpg" alt="" height="250">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
-              </div>
-              <div class="card-footer">
-                <a href="#" class="btn btn-primary">Find Out More!</a>
-              </div>
+    <div class="col-md-4 mb-5">
+      <div class="card h-100">
+        <a href="#" >
+        <img class="card-img-top" src="static/img/food/donggas.png" alt="" height="300">
+        <div class="card-body">
+          <h4 class="card-title">#김밥 천국</h4>
+          <p class="card-text">맛있는 돈가스</p>
+        </div>
+
+        <!--<div class="card-footer">
+          <a href="#" class="btn btn-primary">Find Out More!</a>
+        </div> -->
+
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4 mb-5">
+      <div class="card h-100">
+        <a href="#" >
+        <img class="card-img-top" src="static/img/food/pasta.jpg" alt="" height="300">
+        <div class="card-body">
+          <h4 class="card-title">#이쁜 식당</h4>
+          <p class="card-text">맛있는 파스타</p>
+        </div>
+
+        <!--<div class="card-footer">
+          <a href="#" class="btn btn-primary">Find Out More!</a>
+        </div> -->
+
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- 추천메뉴 row -->
+      <br><br><br>
+      
+  <!-- 추천카페 row -->
+      <h3>
+          <div class="text-primary">
+          <strong>추천 카페</strong>
+        </div>
+      </h3>
+      <!--Grid row-->
+      <div class="row">
+        <div class="col-md-4 mb-5">
+          <div class="card h-100">
+            <a href="#" >
+            <img class="card-img-top" src="static/img/cafe/cafe1.jpg" alt="" height="300">
+            <div class="card-body">
+              <h4 class="card-title">#서울 종로구</h4>
+              <p class="card-text">이쁜 카페</p>
             </div>
-          </div>
-          <div class="col-md-4 mb-5">
-            <div class="card h-100">
-              <img class="card-img-top" src="static/img/food/donggas.png" alt="" height="250">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
-              </div>
-              <div class="card-footer">
-                <a href="#" class="btn btn-primary">Find Out More!</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-5">
-            <div class="card h-100">
-              <img class="card-img-top" src="static/img/food/pasta.jpg" alt="" height="250">
-              <div class="card-body">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-              </div>
-              <div class="card-footer">
-                <a href="#" class="btn btn-primary">Find Out More!</a>
-              </div>
-            </div>
+
+            <!--<div class="card-footer">
+              <a href="#" class="btn btn-primary">Find Out More!</a>
+            </div> -->
+
+            </a>
           </div>
         </div>
-        <!--Grid row-->
-      <!-- 추천카페 row -->
+        <div class="col-md-4 mb-5">
+          <div class="card h-100">
+            <a href="#" >
+            <img class="card-img-top" src="static/img/cafe/cafe2.jpg" alt="" height="300">
+            
+            <div class="card-body">
+              <h4 class="card-title">#청주 서원구</h4>
+              <p class="card-text">이쁜 카페</p>
+            </div>
+
+            <!--<div class="card-footer">
+              <a href="#" class="btn btn-primary">Find Out More!</a>
+            </div> -->
+          </a>
+          </div>
+        </div>
+        <div class="col-md-4 mb-5">
+          <div class="card h-100">
+            <a href="#" >
+            <img class="card-img-top" src="static/img/cafe/cafe3.jpg" alt="" height="300">
+            <div class="card-body">
+              <h4 class="card-title">#서울 청담동</h4>
+              <p class="card-text">이쁜 카페</p>
+            </div>
+
+            <!--<div class="card-footer">
+              <a href="#" class="btn btn-primary">Find Out More!</a>
+            </div> -->
+          </a>
+          </div>
+        </div>
+      </div>
+      <!--Grid row-->
+    <!-- 추천카페 row -->
       </section>
       <!--/Section: Magazine v.1-->
 
