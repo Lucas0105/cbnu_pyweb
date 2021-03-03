@@ -35,6 +35,9 @@
 
 
 <style>
+
+
+
 .main-mostKeyword-list{
   list-style:none;
   display : flex;
@@ -59,7 +62,16 @@
   font-family:"배달의민족 주아";
   margin-left : 30px;
 }
-
+.dropdown-menu{
+  margin-left : 30px;
+}
+.col{
+  font-style:"배달의민족 주아"; 
+  font-weight :  bold;
+  font-size : 21px;
+  font-family:"배달의민족 주아";
+  margin-left : 30px;
+}
 
 
 </style>
@@ -106,7 +118,7 @@
               
             </li>
             <li class="nav-item">
-              <a class="nav-link waves-effect" href="rank.html">푸딩 랭킹</a>
+              <a class="nav-link waves-effect" href="#magazine">푸딩 랭킹</a>
             </li>
             <li class="nav-item">
               <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/getting-started/download/"
@@ -189,179 +201,97 @@
 </div>
 <!--logo-->
 
-  <div style="position: relative; margin-bottom: 50px;">
-    <a>
-      <i class="fas fa-toggle-off fa-3x" style=" float: right; margin-right: 75px;"></i>
-    </a>
-    <br>
-    <br>
-
-    <h5 style="float:right; margin-right: 50px"><strong>위치서비스</strong></h5>
-    <!-- <i class="fas fa-toggle-on fa-3x"></i> -->
- </div>
 
  <br>
  <br>
+<!--화면 2분할 -->
 
+<div class="container overflow-hidden">
+  <div class="row gx-5">
 
+    <div class="col">
+     <div class="p-3 border bg-light"><i class="fas fa-store"></i>  맛집랭킹</div>
+     <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">상호명</th>
+      <th scope="col">지역</th>
+      <th scope="col">사진</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td><img src="static/img/food/crople.jpg" alt="..." height="175"></td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td><img src="static/img/food/donggas.png" alt="..." height="175" width = "175"></td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td><img src="static/img/food/pasta.jpg" alt="..." height="175" width = "175"></td>
+    </tr>
+    <tr>
+      <th scope="col">4</th>
+      <th scope="col">4등가게</th>
+      <th scope="col">오리</th>
+      <th scope="col">라면</th>
+    </tr>
+  </tbody>
+</table>
+    </div>
 
-<!-- 검색창 -->
-<div class="input-group mb-3 input-group-lg">
-  <input type="text" class="form-control" placeholder="먹고싶은 음식을 검색해보세요!" aria-label="Recipient's username"
-    aria-describedby="button-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-md btn-outline-default m-0 px-5 py-2 z-depth-0 waves-effect" type="button" id="button-addon2">검색</button>
+    <div class="col">
+    <div class="p-3 border bg-light"><i class="fas fa-utensils"></i> 음식랭킹</div>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">음식이름</th>
+      <th scope="col">구분</th>
+      <th scope="col">사진</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>크로플</td>
+      <td>디저트</td>
+      <td><img src="static/img/food/crople.jpg" alt="..." height="175" width = "175"></td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td><img src="static/img/food/pasta.jpg" alt="..." height="175" width = "175"></td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td><img src="static/img/food/donggas.png" alt="..." height="175" width = "175"></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
   </div>
 </div>
 
 
-<!-- 검색창 밑에 추천 해시태그  -->
 
-	<div class="main-mostKeyword-wrap">
-           <ul id="mostKeywords" class="main-mostKeyword-list">
-           <li><a class="most-keyword-item" href="javascript:void(0);">#크로플</a></li>
-							<li><a class="most-keyword-item" href="javascript:void(0);">#삼대천왕</a></li>
-							<li><a class="most-keyword-item" href="javascript:void(0);">#인스타 감성</a></li>
-							<li><a class="most-keyword-item" href="javascript:void(0);">#성수동 맛집</a></li>
-							<li><a class="most-keyword-item" href="javascript:void(0);">#곱창 전골</a></li>   
-						</ul>
- </div>
  
 <br>
 <br>
 
 
-      <!-- <hr class="my-5"> -->
-
-      <!--Section: Magazine v.1-->
-      <section id="magazine" class="wow fadeIn">
-
-        <!--Section heading-->
-          <h3>
-              <div class="text-warning">
-                <i class="fas fa-utensils"></i>  <strong> 추천 메뉴</strong>
-              </div>
-          </h3>
-
-  <!-- 추천메뉴 row -->
-
-  <div class="row">
-    <div class="col-md-4 mb-5">
-      <div class="card h-100">
-        <a href="#" >
-        <img class="card-img-top" src="static/img/food/crople.jpg" alt="" height="300">
-        <div class="card-body">
-          <h4 class="card-title">#스타벅스</h4>
-          <p class="card-text">맛있는 와플</p>
-        </div>
-
-        <!--<div class="card-footer">
-          <a href="#" class="btn btn-primary">Find Out More!</a>
-        </div> -->
-
-        </a>
-      </div>
-    </div>
-    <div class="col-md-4 mb-5">
-      <div class="card h-100">
-        <a href="#" >
-        <img class="card-img-top" src="static/img/food/donggas.png" alt="" height="300">
-        <div class="card-body">
-          <h4 class="card-title">#김밥 천국</h4>
-          <p class="card-text">맛있는 돈가스</p>
-        </div>
-
-        <!--<div class="card-footer">
-          <a href="#" class="btn btn-primary">Find Out More!</a>
-        </div> -->
-
-        </a>
-      </div>
-    </div>
-    <div class="col-md-4 mb-5">
-      <div class="card h-100">
-        <a href="#" >
-        <img class="card-img-top" src="static/img/food/pasta.jpg" alt="" height="300">
-        <div class="card-body">
-          <h4 class="card-title">#이쁜 식당</h4>
-          <p class="card-text">맛있는 파스타</p>
-        </div>
-
-        <!--<div class="card-footer">
-          <a href="#" class="btn btn-primary">Find Out More!</a>
-        </div> -->
-
-        </a>
-      </div>
-    </div>
-  </div>
-  <!-- 추천메뉴 row -->
-      <br><br><br>
-      
-  <!-- 추천카페 row -->
-      <h3>
-          <div class="text-warning">
-            <i class="fas fa-coffee"></i> <strong>추천 카페</strong>
-        </div>
-      </h3>
-      <!--Grid row-->
-      <div class="row">
-        <div class="col-md-4 mb-5">
-          <div class="card h-100">
-            <a href="#" >
-            <img class="card-img-top" src="static/img/cafe/cafe1.jpg" alt="" height="300">
-            <div class="card-body">
-              <h4 class="card-title ">#서울 종로구</h4>
-              <p class="card-text">이쁜 카페</p>
-            </div>
-
-            <!--<div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div> -->
-
-            </a>
-          </div>
-        </div>
-        <div class="col-md-4 mb-5">
-          <div class="card h-100">
-            <a href="#" >
-            <img class="card-img-top" src="static/img/cafe/cafe2.jpg" alt="" height="300">
-            
-            <div class="card-body">
-              <h4 class="card-title">#청주 서원구</h4>
-              <p class="card-text">이쁜 카페</p>
-            </div>
-
-            <!--<div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div> -->
-          </a>
-          </div>
-        </div>
-        <div class="col-md-4 mb-5">
-          <div class="card h-100">
-            <a href="#" >
-            <img class="card-img-top" src="static/img/cafe/cafe3.jpg" alt="" height="300">
-            <div class="card-body">
-              <h4 class="card-title">#서울 청담동</h4>
-              <p class="card-text">이쁜 카페</p>
-            </div>
-
-            <!--<div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div> -->
-          </a>
-          </div>
-        </div>
-      </div>
-      <!--Grid row-->
-    <!-- 추천카페 row -->
-      </section>
-      <!--/Section: Magazine v.1-->
 
 
-    </div>
-  </main>
   <!--Main layout-->
 
   <!--Footer-->
