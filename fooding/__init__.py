@@ -1,15 +1,24 @@
 from flask import Flask, g, request, Response, make_response
-from flask import session
+from flask import session, render_template
 from datetime import datetime, date, timedelta
 
 app = Flask(__name__)   # fooding 
 app.debug = True
+# app.jinja_env.trim_blocks = True # 줄 삭제
 
 app.config.update(
-    SECRET_KEY = 'X1243yRH!mMwf',
-    SESSION_COOKIE_NAME='pyweb_flask_session',
-    PERMANENT_SESSION_LIFETIME=timedelta(31) #31days
+    SECRET_KEY = 'X1243yRH!mMwf', #암호화 키
+    SESSION_COOKIE_NAME='pyweb_flask_session',  #대표 이름
+    PERMANENT_SESSION_LIFETIME=timedelta(31) #31days간 유지
 )
+
+@app.route("/tmpl")
+def t():
+    return render_template('index.html', title="Title")
+
+@app.route("/home")
+def h():
+    return render_template("home-page.html")
 
 @app.route('/wc')
 def wc():
