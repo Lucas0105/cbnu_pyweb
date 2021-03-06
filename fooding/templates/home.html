@@ -92,7 +92,7 @@
       <div class="container-fluid">
 
         <!-- Brand -->
-        <a class="navbar-brand waves-effect" href="home-page.html" target="_blank">
+        <a class="navbar-brand waves-effect" href="home.html" target="_blank">
           <strong class="blue-text">Fooding</strong>
         </a>
 
@@ -131,10 +131,11 @@
 
           <!-- Right --> 
           <!-- Button trigger modal -->
+
           <ul class="navbar-nav nav-flex-icons">
             <li class="nav-item">
               <a href="#" id="btnSignin" class="nav-link waves-effect" data-toggle="modal" 
-              data-target="#basicExampleModal">
+              data-target="#loginModal">
                 <i class="fas fa-key"></i> 로그인
               </a>
             </li>
@@ -142,7 +143,7 @@
           <ul class="navbar-nav nav-flex-icons">
             <li class="nav-item">
               <a href="#" id="btnSignin" class="nav-link waves-effect" data-toggle="modal" 
-              data-target="#basicExampleModal">
+              data-target="#registerModal">
                 <i class="fas fa-user"></i> 회원가입
               </a>
             </li>
@@ -190,14 +191,13 @@
 </div>
 <!--logo-->
 
-  <div style="position: relative; margin-bottom: 50px;">
+  <div style="margin-bottom: 50px; float: right">
     <a>
-      <i class="fas fa-toggle-off fa-3x" style=" float: right; margin-right: 75px;"></i>
+      <i class="fas fa-toggle-off fa-3x" style="margin-right: 75px;"></i>
     </a>
     <br>
-    <br>
 
-    <h5 style="float:right; margin-right: 50px"><strong>위치서비스</strong></h5>
+    <h5><strong>위치서비스 </strong></h5>
     <!-- <i class="fas fa-toggle-on fa-3x"></i> -->
  </div>
 
@@ -384,28 +384,28 @@
   </footer>
   <!--/.Footer-->
 
-<!-- Modal -->
-<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<!-- login_Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLable"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel"><strong><i class="fas fa-sign-in-alt"></i> Sign in</strong></h3>
+        <h3 class="modal-title" id="loginModalLable"><strong><i class="fas fa-sign-in-alt"></i> 로그인</strong></h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <!-- Default form login -->
-<form class="text-center border border-light p-5" action="#!">
+<form class="text-center border border-light p-5" action="/register" method="POST">
 
-  <p class="h4 mb-4">Sign in</p>
+  <p class="h4 mb-4">로그인</p>
 
   <!-- Email -->
-  <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+  <input type="text" name="email" class="form-control mb-4" placeholder="E-mail">
 
   <!-- Password -->
-  <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+  <input type="password" name="userPassword" class="form-control mb-4" placeholder="Password">
 
   <div class="d-flex justify-content-around">
       <div>
@@ -422,11 +422,11 @@
   </div>
 
   <!-- Sign in button -->
-  <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+  <button class="btn btn-info btn-block my-4" type="submit">로그인</button>
 
   <!-- Register -->
   <p>Not a member?
-      <a href="">Register</a>
+      <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#registerModal">회원가입</a>
   </p>
 
   <!-- Social login -->
@@ -447,6 +447,101 @@
     </div>
   </div>
 </div>
+
+<!-- register_Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="registerModalLabel"><strong><i class="fas fa-sign-in-alt"></i> 회원가입</strong></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Default form login -->
+<!-- register form-->
+<form>
+  <!-- 2 column grid layout with text inputs for the first and last names -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="form-outline">
+        <input type="text" name="firstName" class="form-control" />
+        <label class="form-label" for="form3Example1">First name</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-outline">
+        <input type="text" name="lastName" class="form-control" />
+        <label class="form-label" for="form3Example2">Last name</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email input -->
+  <div class="form-outline mb-4">
+    <input type="text" name="email" class="form-control" />
+    <label class="form-label" for="form3Example3">Email address</label>
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+    <input type="password" name="userPassword" class="form-control" />
+    <label class="form-label" for="form3Example4">Password</label>
+  </div>
+
+  <!-- Checkbox -->
+  <!-- <div class="form-check d-flex justify-content-center mb-4">
+    <input
+      class="form-check-input me-2"
+      type="checkbox"
+      value=""
+      id="form2Example3"
+      checked
+    />
+    <label class="form-check-label" for="form2Example3">
+      Subscribe to our newsletter
+    </label>
+  </div> -->
+
+  <!-- Submit button -->
+  <button class="btn btn-info btn-block my-4" type="submit">Sign up</button>
+
+
+  <!-- Register buttons -->
+  <div class="text-center">
+  <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
+  <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
+  <a href="#" class="mx-2" role="button"><i class="fab fa-instagram light-blue-text"></i></a>
+  <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
+</div>
+  <!-- <div class="text-center">
+    <p>or sign up with:</p>
+    <button type="button" class="btn btn-primary btn-floating mx-1">
+      <i class="fab fa-facebook-f"></i>
+    </button>
+
+    <button type="button" class="btn btn-primary btn-floating mx-1">
+      <i class="fab fa-google"></i>
+    </button>
+
+    <button type="button" class="btn btn-primary btn-floating mx-1">
+      <i class="fab fa-twitter"></i>
+    </button>
+
+    <button type="button" class="btn btn-primary btn-floating mx-1">
+      <i class="fab fa-github"></i>
+    </button>
+  </div> -->
+</form>
+<!--register form-->
+
+</div>
+</div>
+</div>
+</div>
+<!--register modal-->
   <!-- SCRIPTS -->
   <!-- JQuery -->
   <script type="text/javascript" src="../static/js/jquery-3.4.1.min.js"></script>

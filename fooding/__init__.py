@@ -1,5 +1,5 @@
 from flask import Flask, g, request, Response, make_response
-from flask import session, render_template
+from flask import session, render_template, redirect
 from datetime import datetime, date, timedelta
 
 app = Flask(__name__)   # fooding 
@@ -12,13 +12,27 @@ app.config.update(
     PERMANENT_SESSION_LIFETIME=timedelta(31) #31days간 유지
 )
 
-@app.route("/tmpl")
-def t():
-    return render_template('index.html', title="Title")
 
-@app.route("/home")
-def h():
-    return render_template("home-page.html")
+@app.route("/home.html", methods=['GET'])
+def home():
+    return render_template("home.html")
+
+@app.route("/register", methods=['POST'])
+def register():
+    if request.method == 'POST':
+        register_info = request.form
+        firstName = register_info['firstName']
+        lastName = register_info['lastName']
+        userName = register_info['email']
+        password = register_info['userPassword']
+        print(userName, password, email, firstName, lastName)
+        return redirect(request.url)
+
+    return render_template('home.html')
+
+@app.route("/rank.html")
+def rank():
+    return render_template("rank.html")
 
 @app.route('/wc')
 def wc():
