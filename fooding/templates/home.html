@@ -92,7 +92,7 @@
       <div class="container-fluid">
 
         <!-- Brand -->
-        <a class="navbar-brand waves-effect" href="home.html" target="_blank">
+        <a class="navbar-brand waves-effect" href="home.html" >
           <strong class="blue-text">Fooding</strong>
         </a>
 
@@ -130,22 +130,42 @@
 
           <!-- Right --> 
           <!-- Button trigger modal -->
-
+          {%- if name -%}
           <ul class="navbar-nav nav-flex-icons">
             <li class="nav-item">
-              <a href="#" id="btnSignin" class="nav-link waves-effect" data-toggle="modal" 
-              data-target="#loginModal">
-                <i class="fas fa-key"></i> 로그인
+              <a href="#" class="nav-link waves-effect">
+                <i class="fas fa-user"></i> {{name}}
               </a>
             </li>
-
-          <ul class="navbar-nav nav-flex-icons">
-            <li class="nav-item">
-              <a href="#" id="btnSignin" class="nav-link waves-effect" data-toggle="modal" 
-              data-target="#registerModal">
-                <i class="fas fa-user"></i> 회원가입
-              </a>
-            </li>
+            <ul class="navbar-nav nav-flex-icons">
+              <li class="nav-item">
+                <a href='/logout' id="btnSignin" class="nav-link waves-effect" >
+                  <i class="fas fa-user"></i> 로그아웃
+                </a>
+              </li>
+          
+            {%- else -%}
+            <ul class="navbar-nav nav-flex-icons">
+              <li class="nav-item">
+                <a href="#" id="btnSignin" class="nav-link waves-effect" data-toggle="modal" 
+                data-target="#loginModal">
+                  <i class="fas fa-key"></i> 로그인
+                  
+                </a>
+              </li>
+  
+            <ul class="navbar-nav nav-flex-icons">
+              <li class="nav-item">
+                <a href="#" id="btnSignin" class="nav-link waves-effect" data-toggle="modal" 
+                data-target="#registerModal">
+                  <i class="fas fa-user"></i> 회원가입
+                </a>
+              </li>
+  
+            
+              {%- endif -%}
+              
+              
 
             <ul class="navbar-nav nav-flex-icons">
               <li class="nav-item">
@@ -396,27 +416,27 @@
       </div>
       <div class="modal-body">
         <!-- Default form login -->
-<form class="text-center border border-light p-5" action="/register" method="POST">
+<form class="text-center border border-light p-5" action="/login" method="POST">
 
   <p class="h4 mb-4">로그인</p>
 
-  <!-- Email -->
-  <input type="text" name="email" class="form-control mb-4" placeholder="E-mail">
+  <!-- Id -->
+  <input type="text" name="userId" class="form-control mb-4" placeholder="아이디">
 
   <!-- Password -->
-  <input type="password" name="userPassword" class="form-control mb-4" placeholder="Password">
+  <input type="password" name="userPassword" class="form-control mb-4" placeholder="비밀번호">
 
   <div class="d-flex justify-content-around">
       <div>
           <!-- Remember me -->
           <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
-              <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
+              <label class="custom-control-label" for="defaultLoginFormRemember">아이디 저장</label>
           </div>
       </div>
       <div>
           <!-- Forgot password -->
-          <a href="">Forgot password?</a>
+          <a href="">비밀번호 찾기</a>
       </div>
   </div>
 
@@ -424,12 +444,12 @@
   <button class="btn btn-info btn-block my-4" type="submit">로그인</button>
 
   <!-- Register -->
-  <p>Not a member?
+  <p>
       <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#registerModal">회원가입</a>
   </p>
 
   <!-- Social login -->
-  <p>or sign in with:</p>
+  <p>다른 서비스로 로그인</p>
 
   <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
   <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
@@ -461,33 +481,107 @@
       <div class="modal-body">
         <!-- Default form login -->
 <!-- register form-->
-<form>
+<form action="/register" method="POST">
   <!-- 2 column grid layout with text inputs for the first and last names -->
-  <div class="row mb-4">
-    <div class="col">
-      <div class="form-outline">
-        <input type="text" name="firstName" class="form-control" />
-        <label class="form-label" for="form3Example1">First name</label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-outline">
-        <input type="text" name="lastName" class="form-control" />
-        <label class="form-label" for="form3Example2">Last name</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- Email input -->
+  <!-- ID input -->
   <div class="form-outline mb-4">
-    <input type="text" name="email" class="form-control" />
-    <label class="form-label" for="form3Example3">Email address</label>
+    <input type="text" name="userId" class="form-control" />
+    <label class="form-label" for="form3Example3">아이디</label>
   </div>
 
   <!-- Password input -->
   <div class="form-outline mb-4">
     <input type="password" name="userPassword" class="form-control" />
-    <label class="form-label" for="form3Example4">Password</label>
+    <label class="form-label" for="form3Example4">비밀번호</label>
+  </div>
+
+  <!-- Name input -->
+  <div class="form-outline mb-4">
+    <input type="text" name="userName" class="form-control" />
+    <label class="form-label" for="form3Example4">이름</label>
+  </div>
+
+ <!-- Birthday input -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="form-outline mb-4">
+        <input type="text" name="yy" placeholder="년(4자)" aria-label="년(4자)" class="form-control" maxlength="4">
+        <label class="form-label">생년월일</label>
+    </div>
+    </div>
+    <div class="col">
+      <div class="form-outline mb-4">
+            <select name="mm" class="form-control" aria-label="월">
+              <option value="">월</option>
+                         <option value="01">
+                                                      1
+                                                  </option>
+                         <option value="02">
+                                                      2
+                                                  </option>
+                         <option value="03">
+                                                      3
+                                                  </option>
+                         <option value="04">
+                                                      4
+                                                  </option>
+                         <option value="05">
+                                                      5
+                                                  </option>
+                         <option value="06">
+                                                      6
+                                                  </option>
+                         <option value="07">
+                                                      7
+                                                  </option>
+                         <option value="08">
+                                                      8
+                                                  </option>
+                         <option value="09">
+                                                      9
+                                                  </option>
+                         <option value="10">
+                                                      10
+                                                  </option>
+                         <option value="11">
+                                                      11
+                                                  </option>
+                         <option value="12">
+                                                      12
+                                                  </option>
+            </select>
+    </div>
+    </div>
+    <div class="col">
+      <div class="form-outline mb-4">
+        <input type="text" name="dd" placeholder="일" aria-label="일" class="form-control" maxlength="2">
+    </div>
+    </div>
+  </div>
+
+<!-- gender input -->
+<div class="form-outline mb-4">
+        <select name="gender" class="form-control" aria-label="성별">
+            <option value="" selected="">성별</option>
+                    <option value="M">남자</option>
+                    <option value="F">여자</option>
+                    <option value="U">선택 안함</option>
+        </select>
+        <label class="form-label">성별</label>
+</div>
+
+  
+
+  <!-- Email input -->
+  <div class="form-outline mb-4">
+    <input type="text" name="email" class="form-control" />
+    <label class="form-label" for="form3Example3">이메일 주소</label>
+  </div>
+
+  <!-- PhonNo input -->
+  <div class="form-outline mb-4">
+        <input type="tel" name="phoneNo" placeholder="전화번호 입력" aria-label="전화번호 입력" class="form-control" maxlength="16">
+        <label class="form-label">휴대전화</label>
   </div>
 
   <!-- Checkbox -->
@@ -505,7 +599,7 @@
   </div> -->
 
   <!-- Submit button -->
-  <button class="btn btn-info btn-block my-4" type="submit">Sign up</button>
+  <button class="btn btn-info btn-block my-4" type="submit">가입하기</button>
 
 
   <!-- Register buttons -->

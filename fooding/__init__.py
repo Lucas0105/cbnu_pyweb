@@ -1,9 +1,14 @@
 from flask import Flask, g, request, Response, make_response
-from flask import session, render_template, redirect
+from flask import session, render_template, redirect, jsonify, url_for
 from datetime import datetime, date, timedelta
+import pymysql, bcrypt, jwt
 
 app = Flask(__name__)   # fooding 
 app.debug = True
+
+db = pymysql.connect(host='localhost', port=3306, user='root', passwd='753951',
+                    db='fooding_db', charset='utf8')
+cursor = db.cursor()
 # app.jinja_env.trim_blocks = True # 줄 삭제
 
 app.config.update(
@@ -11,106 +16,123 @@ app.config.update(
     SESSION_COOKIE_NAME='pyweb_flask_session',  #대표 이름
     PERMANENT_SESSION_LIFETIME=timedelta(31) #31days간 유지
 )
-
-
 @app.route("/home.html", methods=['GET'])
 def home():
-    return render_template("home.html")
+    if 'user' in session:
+        return render_template("home.html", name = session['user'])
+    else:
+        return render_template("home.html")
+        
 
-@app.route("/register", methods=['POST'])
+@app.route('/register', methods=['GET','POST'])
 def register():
     if request.method == 'POST':
         register_info = request.form
-        firstName = register_info['firstName']
-        lastName = register_info['lastName']
-        userName = register_info['email']
-        password = register_info['userPassword']
-        print(userName, password, email, firstName, lastName)
-        return redirect(request.url)
+        userId = register_info['userId']
+        hashed_userPassword = bcrypt.hashpw(register_info['userPassword'].encode('utf-8'), bcrypt.gensalt()) #salting 및 256해쉬 값으로 암호화
+        userName = register_info['userName']
+        yy = register_info['yy']
+        mm = register_info['mm']
+        dd = register_info['dd']
+        birthday = yy + mm + dd
+        gender = register_info['gender']
+        email = register_info['email']
+        phoneNo = register_info['phoneNo']
 
-    return render_template('home.html')
+        if not(userId and email and hashed_userPassword and userName
+                and yy and mm and dd and gender and phoneNo):
+            return "입력되지 않은 정보가 있습니다"
 
-@app.route("/rank.html")
+        # print(userId, userPassword)
+        sql = """
+            INSERT INTO UserInfo (userid, hashed_password, username, birthdata, 
+                                    gender, email, phonno)
+            VALUES(%s, %s, %s, %s, %s, %s, %s);
+        """
+        cursor.execute(sql, (userId, hashed_userPassword, userName, birthday, gender,
+                         email, phoneNo))
+        db.commit()
+        db.close()
+        return redirect('home.html')
+
+    else: 
+        return render_template('home.html')
+
+@app.route("/login", methods=['GET','POST'])
+def login():
+    msg = ''
+    if request.method == 'POST':
+        login_info = request.form
+
+        userId = login_info['userId']
+        userPassword = login_info['userPassword']
+
+        sql = "SELECT * FROM UserInfo WHERE userid=%s"
+        rows_count = cursor.execute(sql, userId)
+        session['name'] = userId
+
+        if rows_count > 0:
+            user_info = cursor.fetchone()
+            # print("user info: ", user_info)
+            pw_from_db = user_info[2]
+            is_pw_correct = bcrypt.checkpw(userPassword.encode('UTF-8'), pw_from_db.encode('UTF-8'))
+            
+            if is_pw_correct:
+                session['user'] = user_info[3]
+                return redirect("home.html")
+            else :
+                return redirect("home.html")
+
+        else:
+            return '', 401
+
+    return render_template("home.html")
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('home'))
+
+@app.route('/rank.html')
 def rank():
-    return render_template("rank.html")
+    if 'user' in session:
+        return render_template("rank.html", name = session['user'])
+    else:
+        return render_template("rank.html")
 
-@app.route('/wc')
-def wc():
-    key = request.args.get('key')
-    val = request.args.get('val')
-    res = Response("SET COOKIE")
-    res.set_cookie(key, val)
-    session['Token'] = '123X'
-    return make_response(res)
+@app.route('/rec.html')
+def rec():
+    if 'user' in session:
+        return render_template("rec.html", name = session['user'])
+    else:
+        return render_template("rec.html")
 
-@app.route('/rc')
-def rc():
-    key = request.args.get('key') #token
-    val = request.cookies.get(key)
-    return "cookie['" + key +"'] = " + val + ", " + session.get('Token')
+# @app.route('/get_coin', methods=['POST'])
+# def get_coin():
+#     access_token = request.headers.get('Authorization')
+#     if access_token is not None:
+#         try:
+#             payload = jwt.decode(access_token, 'mysecretkey', 'HS256')
+#         except jwt.InvalidTokenError:
+#             payload = None
+        
+#         if payload is None:
+#             return Response(status=401)
 
-@app.route('/delsess')
-def delsess():
-    if session.get('Token'):
-        del session['Token']
-    return "Session이 삭제되었습니다!"
-# @app.route('/reqenv')
-# def reqenv():
-#     return 'reqenv()'
+#         user_id = payload['user_id']
+#         print('payload: ', payload)
 
-def ymd(fmt):
-    def trans(date_str):
-        return datetime.strptime(date_str, fmt)
-    return trans
-
-@app.route('/dt')
-def dt():
-    datestr = request.values.get('date', date.today(), type=ymd('%Y-%m-%d')) #date.today() = default 값, Year = 대문자Y
-    return "우리나라 시간 형식: " + str(datestr)
-
-# app.config['SERVER_NAME'] = 'local.com:5000'
-
-# @app.route("/sd")
-# def helloworld_local():
-#     return "Hello Local.com!"
-
-# @app.route("/sd", subdomain="g")
-# def helloGworld_local():
-#     return "Hello G.Local.com!!!"
-
-@app.route('/rp')
-def rp():
-    # q = request.args.get('q')
-    q = request.args.getlist('q')
-
-    return "q = %s" % str(q)
-
-@app.route('/test_wsgi')
-def wsgi_test():
-    def application(environ, start_response):
-        body = 'The request method was %s' % environ['REQUEST_METHOD']
-        headers = [ ('Content-Type', 'text/plain'),
-                    ('Content-Length', str(len(body))) ]
-        start_response('200 OK', headers)
-        return [body]
-    
-    return make_response(application) #함수로 받으면 plain
-
-@app.route('/res1')
-def res1():
-    custom_res = Response("Custom Response", 200, {'test': 'ttt'})  #test:ttt 헤더 편지봉투 뒷 부분
-    return make_response(custom_res) #make_response -> stream으로 보냄
-
-
-# @app.before_request   #어떤 request 주소를 부르기 전에 항상 실행 
-# def before_request():  #euc-kr -> utf-8 Filter 역할  요즘에는 바로 써서 잘 안씀
-#     print("before_request!!")
-#     g.str = "한글" # 접속자 수, 방문자 수에 활용 가능 서버 이동할 때(모든 이용자 컨트롤)
-
- 
-@app.route("/gg") 
-def helloworld2():
-    return "Hello Flask World!"+getattr(g, 'str', '111')
+#         if int(user_id) == 4:
+#             return jsonify({
+#                 'bitcoin': 100
+#             })
+#         else:
+#             return jsonify({
+#                 'bitcoin': 0
+#             })
+#     return jsonify({
+#         'bitcoin': 10
+#     })
 
 
 @app.route("/")  #이 request에 대한
