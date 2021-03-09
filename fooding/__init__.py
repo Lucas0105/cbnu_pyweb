@@ -60,7 +60,6 @@ def register():
 
 @app.route("/login", methods=['GET','POST'])
 def login():
-    msg = ''
     if request.method == 'POST':
         login_info = request.form
 
