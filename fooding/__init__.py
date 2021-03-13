@@ -106,6 +106,12 @@ def rec():
     else:
         return render_template("rec.html")
 
+@app.route('/customerService.html')
+def customerService():
+    if 'user' in session:
+        return render_template("customerService.html", name = session['user'])
+    else:
+        return render_template("customerService.html")
 # @app.route('/get_coin', methods=['POST'])
 # def get_coin():
 #     access_token = request.headers.get('Authorization')
