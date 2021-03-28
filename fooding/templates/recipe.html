@@ -86,65 +86,6 @@ position:absolute;
 
 </style>
 
-<!--위치 검색 쿼리-->
-<script>
-jQuery(document).ready(function(){
-  //sido option 추가
-  jQuery.each(hangjungdong.sido, function(idx, code){
-    //append를 이용하여 option 하위에 붙여넣음
-    jQuery('#sido').append(fn_option(code.sido, code.codeNm));
-  });
- 
-  //sido 변경시 시군구 option 추가
-  jQuery('#sido').change(function(){
-    jQuery('#sigugun').show();
-    jQuery('#sigugun').empty();
-    jQuery('#sigugun').append(fn_option('','선택')); //
-    jQuery.each(hangjungdong.sigugun, function(idx, code){
-      if(jQuery('#sido > option:selected').val() == code.sido)
-        jQuery('#sigugun').append(fn_option(code.sigugun, code.codeNm));
-    });
- 
-    //세종특별자치시 예외처리
-    //옵션값을 읽어 비교
-    if(jQuery('#sido option:selected').val() == '36'){
-      jQuery('#sigugun').hide();
-      //index를 이용해서 selected 속성(attr)추가
-      //기본 선택 옵션이 최상위로 index 0을 가짐
-      jQuery('#sigugun option:eq(1)').attr('selected', 'selected');
-      //trigger를 이용해 change 실행
-      jQuery('#sigugun').trigger('change');
-    }
-  });
- 
-  //시군구 변경시 행정동 옵션추가
-  jQuery('#sigugun').change(function(){
-    //option 제거
-    jQuery('#dong').empty();
-    jQuery.each(hangjungdong.dong, function(idx, code){
-      if(jQuery('#sido > option:selected').val() == code.sido && jQuery('#sigugun > option:selected').val() == code.sigugun)
-        jQuery('#dong').append(fn_option(code.dong, code.codeNm));
-    });
-    //option의 맨앞에 추가
-    jQuery('#dong').prepend(fn_option('','선택'));
-    //option중 선택을 기본으로 선택
-    jQuery('#dong option:eq("")').attr('selected', 'selected');
- 
-  });
- 
-  jQuery('#dong').change(function(){
-    var sido = jQuery('#sido option:selected').val();
-    var sigugun = jQuery('#sigugun option:selected').val();
-    var dong = jQuery('#dong option:selected').val();
-    var dongCode = sido + sigugun + dong + '00';    
-  });
-});
- 
-function fn_option(code, name){
-  return '<option value="' + code +'">' + name +'</option>';
-}
-</script>
-
 </head>
 
 <body>
@@ -302,16 +243,7 @@ function fn_option(code, name){
 <!-- 검색창 -->
 
 <div class="input-group mb-3 input-group-lg">
-        <select id="sido" style="width: 100px;height:48px; font-size:20px; font-family: 배달의민족 주아;">
-          <option value="" style="font-size: 25px;">선택</option>
-        </select>
-        <select id="sigugun" style="width: 100px;height:48px; font-size:20px;">
-          <option value="">선택</option>
-        </select>
-        <select id="dong" style="width: 100px;height:48px; font-size:20px;">
-          <option value="">선택</option>
-        </select>
-  <input type="text" class="form-control" placeholder="지역을 검색해주세요!" aria-label="Recipient's username"
+  <input type="text" class="form-control" placeholder="레시피를 검색해주세요!" aria-label="Recipient's username"
     aria-describedby="button-addon2">
   <div class="input-group-append">
     <button class="btn btn-md btn-outline-default m-0 px-5 py-2 z-depth-0 waves-effect" type="button" id="button-addon2">검색</button>
@@ -323,11 +255,11 @@ function fn_option(code, name){
 
 	<div class="main-mostKeyword-wrap">
            <ul id="mostKeywords" class="main-mostKeyword-list">
-           <li><a class="most-keyword-item" href="javascript:void(0);">#서울평창동</a></li>
-							<li><a class="most-keyword-item" href="javascript:void(0);">#인천부평동</a></li>
-							<li><a class="most-keyword-item" href="javascript:void(0);">#대구삼덕동</a></li>
-							<li><a class="most-keyword-item" href="javascript:void(0);">#부산좌천동</a></li>
-							<li><a class="most-keyword-item" href="javascript:void(0);">#제주연동</a></li>   
+           <li><a class="most-keyword-item" href="javascript:void(0);">#새싹비빔밥</a></li>
+							<li><a class="most-keyword-item" href="javascript:void(0);">#스팸마요덮밥</a></li>
+							<li><a class="most-keyword-item" href="javascript:void(0);">#레몬청</a></li>
+							<li><a class="most-keyword-item" href="javascript:void(0);">#김치볶음밥</a></li>
+							<li><a class="most-keyword-item" href="javascript:void(0);">#차돌떡볶이</a></li>   
 						</ul>
  </div>
  
@@ -341,217 +273,83 @@ function fn_option(code, name){
       <section id="magazine" class="wow fadeIn">
 
 
-  <!-- 음식추천 row1 -->
-
-  <div class="row">
-    <div class="col-md-6 mb-5">
-      <div class="card h">
-        <a href="#" >
-            <div class="row" style="padding: 10px;">
-                <div class="col-md-5">
-                    <div class="card-body">
-                        <h4 class="card-title">#혜영최고</h4>
-                        <p class="card-text">맛있는 와플</p>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                    <img class="card-img-top" src="../static/img/food/crople.jpg" alt="" height="300" >
+<!-- 음식추천 row1 -->
+<div class="card h">
+    <a href="#" >
+        <div class="row" style="padding: 10px;">
+            <div class="col-md-4">
+                <div class="card-body">
+                  <img class="card-img-top" src="../static/img/food/food_2.JPG" alt="" height="300" >
                 </div>
             </div>
+            <div class="col-md-8">
+              <br>
+              <h4 class="card-title">#브라우니</h4>
+              <br>
+              <P>재료: 달걀 2개, 설탕 90g, 소금 1/2ts, 바닐라 익스트랙, 코코아파우더 25g, 박력분 65g, 다크 커버춰 초콜릿 120g, 버터 55g</P>
+              <br>
+              <P> 달걀을 잘 풀어준 다음 소금과 바닐라 익스트랙을 넣고 잘 저어준다 그리고 설탕을 넣고 휘핑기로 잘 풀어준 후 상온에 조금 둔다. 다음엔 버터와 다크 커버춰 초콜릿을 중탕한다. 중탕이 다 되면 아까의 달걀물과 조금씩 섞어준다. 그다음 박력분과 다크 초코 가루를 체에 내린다. 아까 만들어 둔 것과 섞은 뒤 팬에 담고 오븐 예열없이 180도씨 오븐에서 27분간 구워준다.</P>
 
-
-            <div class="row" style="padding: 10px;">
-                <div class="col-md-5">
-                    <div class="card-body">
-                        <h4 class="card-title">#혜영최고</h4>
-                        <p class="card-text">맛있는 와플</p>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                <div class="map-responsive">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.1062622773675!2d127.00489301541758!3d37.50541183538383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca17ca5bcbcc5%3A0xe21243e195c38f39!2z7ISc7Jq46rOg7IaN67KE7Iqk7YSw66-464SQ!5e0!3m2!1sko!2skr!4v1592817756049!5m2!1sko!2skr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                </div>
-                </div>
             </div>
-        </a>
-      </div>
-    </div>
+        </div>
 
-    <div class="col-md-6 mb-5">
-      <div class="card h-100">
-        <a href="#" >
-            <div class="row" style="padding: 10px;">
-                <div class="col-md-5">
-                    <div class="card-body">
-                        <h4 class="card-title">#혜영최고</h4>
-                        <p class="card-text">맛있는 와플</p>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                    <img class="card-img-top" src="../static/img/food/crople.jpg" alt="" height="300" >
-                </div>
-            </div>
-
-            <div class="row" style="padding: 10px;">
-                <div class="col-md-5">
-                    <div class="card-body">
-                        <h4 class="card-title">#혜영최고</h4>
-                        <p class="card-text">맛있는 와플</p>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                <div class="map-responsive">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.1062622773675!2d127.00489301541758!3d37.50541183538383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca17ca5bcbcc5%3A0xe21243e195c38f39!2z7ISc7Jq46rOg7IaN67KE7Iqk7YSw66-464SQ!5e0!3m2!1sko!2skr!4v1592817756049!5m2!1sko!2skr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                </div>
-                </div>
-            </div>
-        </a>
-      </div>
-    </div>
+    </a>
 </div>
-  <br><br>
+<br><br>
   <!-- 음식추천 row1 -->
       
 
 
   <!-- 음식 추천 row 2 -->
-  <div class="row">
-    <div class="col-md-6 mb-5">
-      <div class="card h-100">
-        <a href="#" >
-            <div class="row" style="padding: 10px;">
-                <div class="col-md-5">
-                    <div class="card-body">
-                        <h4 class="card-title">#혜영최고</h4>
-                        <p class="card-text">맛있는 와플</p>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                    <img class="card-img-top" src="../static/img/food/crople.jpg" alt="" height="300" >
+  <div class="card h">
+    <a href="#" >
+        <div class="row" style="padding: 10px;">
+            <div class="col-md-4">
+                <div class="card-body">
+                  <img class="card-img-top" src="../static/img/food/food_1.JPG" alt="" height="300" >
                 </div>
             </div>
+            <div class="col-md-8">
+              <br>
+              <h4 class="card-title">#제육볶음</h4>
+              <br>
+              <P>재료: 돼지고기 전지 300g, 대파 2대, 양파 1/2개, 양배추 한 줌, 청양고추 2개, 당근 1/6개</P>
+              <br>
+              <P>양념: 물 100ml, 고추장(1.5T), 다진마늘(1T), 간장(2T), 고춧가루(1T), 설탕(1.5T), 참기름(1T), 다진생강(0.3T) </P>
 
-            <div class="row" style="padding: 10px;">
-                <div class="col-md-5">
-                    <div class="card-body">
-                        <h4 class="card-title">#혜영최고</h4>
-                        <p class="card-text">맛있는 와플</p>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                <div class="map-responsive">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.1062622773675!2d127.00489301541758!3d37.50541183538383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca17ca5bcbcc5%3A0xe21243e195c38f39!2z7ISc7Jq46rOg7IaN67KE7Iqk7YSw66-464SQ!5e0!3m2!1sko!2skr!4v1592817756049!5m2!1sko!2skr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                </div>
-                </div>
             </div>
-        </a>
-      </div>
-    </div>
+        </div>
 
-    <div class="col-md-6 mb-5">
-      <div class="card h-100">
-        <a href="#" >
-            <div class="row" style="padding: 10px;">
-                <div class="col-md-5">
-                    <div class="card-body">
-                        <h4 class="card-title">#혜영최고</h4>
-                        <p class="card-text">맛있는 와플</p>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                    <img class="card-img-top" src="../static/img/food/crople.jpg" alt="" height="300" >
-                </div>
-            </div>
-
-            <div class="row" style="padding: 10px;">
-                <div class="col-md-5">
-                    <div class="card-body">
-                        <h4 class="card-title">#혜영최고</h4>
-                        <p class="card-text">맛있는 와플</p>
-                    </div>
-                </div>
-                <div class="col-md-7">
-                <div class="map-responsive">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.1062622773675!2d127.00489301541758!3d37.50541183538383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca17ca5bcbcc5%3A0xe21243e195c38f39!2z7ISc7Jq46rOg7IaN67KE7Iqk7YSw66-464SQ!5e0!3m2!1sko!2skr!4v1592817756049!5m2!1sko!2skr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                </div>
-                </div>
-            </div>
-        </a>
-      </div>
-    </div>
+    </a>
 </div>
-  <br><br>
+<br><br>
     <!-- 음식추천 row 2 -->
 
 
     <!-- 음식 추천 row 3 -->
-      <div class="row">
-        <div class="col-md-6 mb-5">
-          <div class="card h-100">
-            <a href="#" >
-                <div class="row" style="padding: 10px;">
-                    <div class="col-md-5">
-                        <div class="card-body">
-                            <h4 class="card-title">#혜영최고</h4>
-                            <p class="card-text">맛있는 와플</p>
-                        </div>
-                    </div>
-                    <div class="col-md-7">
-                        <img class="card-img-top" src="../static/img/food/crople.jpg" alt="" height="300" >
-                    </div>
-                </div> 
-    
-                <div class="row" style="padding: 10px;">
-                    <div class="col-md-5">
-                        <div class="card-body">
-                            <h4 class="card-title">#혜영최고</h4>
-                            <p class="card-text">맛있는 와플</p>
-                        </div>
-                    </div>
-                    <div class="col-md-7">
-                    <div class="map-responsive">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.1062622773675!2d127.00489301541758!3d37.50541183538383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca17ca5bcbcc5%3A0xe21243e195c38f39!2z7ISc7Jq46rOg7IaN67KE7Iqk7YSw66-464SQ!5e0!3m2!1sko!2skr!4v1592817756049!5m2!1sko!2skr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                    </div>
-                    </div>
-                </div>
-            </a>
+    <div class="card h">
+      <a href="#" >
+          <div class="row" style="padding: 10px;">
+              <div class="col-md-4">
+                  <div class="card-body">
+                    <img class="card-img-top" src="../static/img/food/food_2.JPG" alt="" height="300" >
+                  </div>
+              </div>
+              <div class="col-md-8">
+                <br>
+                <h4 class="card-title">#브라우니</h4>
+                <br>
+                <P>재료: 달걀 2개, 설탕 90g, 소금 1/2ts, 바닐라 익스트랙, 코코아파우더 25g, 박력분 65g, 다크 커버춰 초콜릿 120g, 버터 55g</P>
+                <br>
+                <P> 달걀을 잘 풀어준 다음 소금과 바닐라 익스트랙을 넣고 잘 저어준다 그리고 설탕을 넣고 휘핑기로 잘 풀어준 후 상온에 조금 둔다. 다음엔 버터와 다크 커버춰 초콜릿을 중탕한다. 중탕이 다 되면 아까의 달걀물과 조금씩 섞어준다. 그다음 박력분과 다크 초코 가루를 체에 내린다. 아까 만들어 둔 것과 섞은 뒤 팬에 담고 오븐 예열없이 180도씨 오븐에서 27분간 구워준다.</P>
+
+              </div>
           </div>
-        </div>
-    
-        <div class="col-md-6 mb-5">
-          <div class="card h-100">
-            <a href="#" >
-                <div class="row" style="padding: 10px;">
-                    <div class="col-md-5">
-                        <div class="card-body">
-                            <h4 class="card-title">#혜영최고</h4>
-                            <p class="card-text">맛있는 와플</p>
-                        </div>
-                    </div>
-                    <div class="col-md-7">
-                        <img class="card-img-top" src="../static/img/food/crople.jpg" alt="" height="300" >
-                    </div>
-                </div>
-    
-                <div class="row" style="padding: 10px;">
-                    <div class="col-md-5">
-                        <div class="card-body">
-                            <h4 class="card-title">#혜영최고</h4>
-                            <p class="card-text">맛있는 와플</p>
-                        </div>
-                    </div>
-                    <div class="col-md-7">
-                    <div class="map-responsive">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.1062622773675!2d127.00489301541758!3d37.50541183538383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca17ca5bcbcc5%3A0xe21243e195c38f39!2z7ISc7Jq46rOg7IaN67KE7Iqk7YSw66-464SQ!5e0!3m2!1sko!2skr!4v1592817756049!5m2!1sko!2skr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-                    </div>
-                    </div>
-                </div>
-            </a>
-          </div>
-        </div>
-    </div>
-    <br><br>
-    <!-- 음식추천 row 3 -->
+
+      </a>
+</div>
+<br><br>
+<!-- 음식추천 row 3 -->
 
 
       </section>
