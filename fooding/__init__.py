@@ -6,9 +6,9 @@ import pymysql, bcrypt, jwt
 app = Flask(__name__)   # fooding 
 app.debug = True
 
-db = pymysql.connect(host='localhost', port=3306, user='root', passwd='753951',
-                    db='fooding_db', charset='utf8')
-cursor = db.cursor()
+# db = pymysql.connect(host='localhost', port=3306, user='root', passwd='753951',
+#                     db='fooding_db', charset='utf8')
+
 # app.jinja_env.trim_blocks = True # 줄 삭제
 
 app.config.update(
@@ -26,6 +26,10 @@ def home():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
+    db = pymysql.connect(host='fooding-db.ccdrxs6wuzho.us-east-2.rds.amazonaws.com', port=3306, user='admin', passwd='fooding!',
+                    db='fooding_db', charset='utf8')
+    cursor = db.cursor()
+
     if request.method == 'POST':
         register_info = request.form
         userId = register_info['userId']
@@ -49,8 +53,7 @@ def register():
                                     gender, email, phonno)
             VALUES(%s, %s, %s, %s, %s, %s, %s);
         """
-        cursor.execute(sql, (userId, hashed_userPassword, userName, birthday, gender,
-                         email, phoneNo))
+        cursor.execute(sql, (userId, hashed_userPassword, userName, birthday, gender, email, phoneNo))
         db.commit()
         db.close()
         return redirect('home.html')
@@ -60,6 +63,10 @@ def register():
 
 @app.route("/login", methods=['GET','POST'])
 def login():
+    db = pymysql.connect(host='fooding-db.ccdrxs6wuzho.us-east-2.rds.amazonaws.com', port=3306, user='admin', passwd='fooding!',
+                    db='fooding_db', charset='utf8')
+    cursor = db.cursor()
+
     if request.method == 'POST':
         login_info = request.form
 
@@ -78,13 +85,15 @@ def login():
             
             if is_pw_correct:
                 session['user'] = user_info[3]
+                db.close()
                 return redirect("home.html")
             else :
+                db.close()
                 return redirect("home.html")
-
+                
         else:
             return '', 401
-
+            
     return render_template("home.html")
 
 @app.route('/logout')
