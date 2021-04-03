@@ -92,7 +92,8 @@ def login():
                 return redirect("home.html")
                 
         else:
-            return '', 401
+            db.close()
+            return redirect("home.html")
             
     return render_template("home.html")
 
