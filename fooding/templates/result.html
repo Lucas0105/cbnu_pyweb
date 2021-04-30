@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!--
+  meta
+  name 특성을 지정하면 전체 페이지에 적용되는 "문서 레벨 메타데이터"를 제공
+  http-equiv 특성을 지정하면 유사한 이름의 HTTP 헤더가 제공하는 정보와 동일한 "프래그마 지시문"이 됨
+  charset 특성을 지정하면 문서 인코딩에 사용한 문자 인코딩을 나타내는 "문자 집합 선언"이 됨
+  itemprop 특성을 지정하면 "사용자 정의 메타데이터"를 제공-->
+  <meta charset="utf-8">
+
+  <!--name  = viewport는 화면 해상도와 크기를 조절
+    content="with=device-with 웹페이지의 크기가 모니터의 실제 크기를 따라가도록 만든 설절
+    initial-cale은 페이지가 처음 로드될 때 줌 레벨을 조정 스마트폰에서만 효과가 있음
+    shrink-to-fit=no 애플 사파리 11버전에서 viewport 크기가 보여줘야할 내용보다 작으면 내용을 줄여서 no로 줄임을 방지-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!--x-ua-compatible 호환성보기를 무시해줌 ie=edge 모든 IE 브라우저의 호환성보기 무시-->
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  
+
+  <!--<link> 태그의 rel 속성은 현재 문서와 외부 리소스 사이의 연관 관계를 명시 스타일 시트(stylesheet)로 사용할 외부 리소스를 불러옴.-->
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fooding data -->
+  <link href="../static/css/mdb.min.css" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="../static/css/style.min.css" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-latest.min.js" type="application/javascript"></script>
+  <script type="application/javascript" src="https://zelkun.tistory.com/attachment/cfile8.uf@99BB7A3D5D45C065343307.js"></script>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+
+<!-- d3.js -->
+<script src="http://d3js.org/dr.v3.min.js" charset="utf-8"></script>
+<script src="js/resultg.js" charset="utf-8"></script>
+
+
+<style>
+.main-mostKeyword-list{
+  list-style:none;
+  display : flex;
+}
+
+.most-keyword-item{
+   margin-left : 105px;
+}
+
+
+.blue-text{
+  font-style:"배달의민족 주아"; 
+  font-weight :  bold;
+  font-size : 45px;
+  font-family:"배달의민족 주아";
+}
+
+.nav-item{
+  font-style:"배달의민족 주아"; 
+  font-weight :  bold;
+  font-size : 17px;
+  font-family:"배달의민족 주아";
+  margin-left : 30px;
+}
+
+footer {
+    background-color: #555;
+    color: white;
+    padding: 30px;
+    font-size : 12px;
+    }
+    
+.map-responsive{
+overflow:hidden;
+padding-bottom:56.25%;
+position:relative;
+height:0;
+}
+
+.map-responsive iframe{
+left:0;
+top:0;
+height:100%;
+width:100%;
+position:absolute;
+}   
+
+</style>
+
+<!-- d3.js -->
+<style type="text/css">
+    /* 13. Basic Styling with CSS */
+    
+    /* Style the lines by removing the fill and applying a stroke */
+    .line {
+        fill: none;
+        stroke: #ffab00;
+        stroke-width: 2;
+    }
+      
+    .overlay {
+      fill: none;
+      pointer-events: all;
+    }
+    
+    /* Style the dots by assigning a fill and stroke */
+    .dot {
+        fill: #ffab00;
+        stroke: #fff;
+    }
+      
+      .focus circle {
+      fill: none;
+      stroke: steelblue;
+    }
+    
+    </style>
+
+<!--위치 검색 쿼리-->
+<script>
+jQuery(document).ready(function(){
+  //sido option 추가
+  jQuery.each(hangjungdong.sido, function(idx, code){
+    //append를 이용하여 option 하위에 붙여넣음
+    jQuery('#sido').append(fn_option(code.sido, code.codeNm));
+  });
+ 
+  //sido 변경시 시군구 option 추가
+  jQuery('#sido').change(function(){
+    jQuery('#sigugun').show();
+    jQuery('#sigugun').empty();
+    jQuery('#sigugun').append(fn_option('','선택')); //
+    jQuery.each(hangjungdong.sigugun, function(idx, code){
+      if(jQuery('#sido > option:selected').val() == code.sido)
+        jQuery('#sigugun').append(fn_option(code.sigugun, code.codeNm));
+    });
+ 
+    //세종특별자치시 예외처리
+    //옵션값을 읽어 비교
+    if(jQuery('#sido option:selected').val() == '36'){
+      jQuery('#sigugun').hide();
+      //index를 이용해서 selected 속성(attr)추가
+      //기본 선택 옵션이 최상위로 index 0을 가짐
+      jQuery('#sigugun option:eq(1)').attr('selected', 'selected');
+      //trigger를 이용해 change 실행
+      jQuery('#sigugun').trigger('change');
+    }
+  });
+ 
+  //시군구 변경시 행정동 옵션추가
+  jQuery('#sigugun').change(function(){
+    //option 제거
+    jQuery('#dong').empty();
+    jQuery.each(hangjungdong.dong, function(idx, code){
+      if(jQuery('#sido > option:selected').val() == code.sido && jQuery('#sigugun > option:selected').val() == code.sigugun)
+        jQuery('#dong').append(fn_option(code.dong, code.codeNm));
+    });
+    //option의 맨앞에 추가
+    jQuery('#dong').prepend(fn_option('','선택'));
+    //option중 선택을 기본으로 선택
+    jQuery('#dong option:eq("")').attr('selected', 'selected');
+ 
+  });
+ 
+  jQuery('#dong').change(function(){
+    var sido = jQuery('#sido option:selected').val();
+    var sigugun = jQuery('#sigugun option:selected').val();
+    var dong = jQuery('#dong option:selected').val();
+    var dongCode = sido + sigugun + dong + '00';    
+  });
+});
+ 
+function fn_option(code, name){
+  return '<option value="' + code +'">' + name +'</option>';
+}
+</script>
+
+</head>
+
+<body>
+  
+  <!--Main Navigation-->
+  <header>
+    <!--
+        <nav> 요소는 문서의 부분 중 현재 페이지 내, 또는 다른 페이지로의 링크를 보여주는 구획 자주 쓰이는 예제는 메뉴, 목차, 색인
+        fixed-bottom 하단에 고정 fixed-top 상단에 고정
+        navbar-expand-lg 큰 화면 일때 네비바 메뉴가 숨고 이상일 때 펼쳐진다는 뜻
+        navbar-light 는 네비바의 글자색을 의미
+        bg-light 는 네비바의 background-color 를 의미
+        색상 primary, secondary, success, dangerm warning, info, light, dark, white
+        scrolling-navbar 스크롤 했을 시 내비바 효과
+      -->
+
+     
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white scrolling-navbar" width = 100%>
+      <div class="container-fluid">
+
+        <!-- Brand -->
+        <a class="navbar-brand waves-effect" href="home.html">
+          <strong class="blue-text">Fooding</strong>
+        </a>
+
+        <!-- Collapse -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+          <!-- Left -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="rank.html">푸딩 랭킹</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="rec.html" >푸딩 추천</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="talk.html">푸딩톡
+               </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="recipe.html">푸딩 레시피
+               </a>
+            </li>
+          </ul>
+
+          
+
+          <!-- Right --> 
+          <!-- Button trigger modal -->
+
+          {%- if name -%}
+          <ul class="navbar-nav nav-flex-icons">
+            <li class="nav-item">
+              <a href="#" class="nav-link waves-effect">
+                <i class="fas fa-user"></i> {{name}}
+              </a>
+            </li>
+            <ul class="navbar-nav nav-flex-icons">
+              <li class="nav-item">
+                <a href='/logout' id="btnSignin" class="nav-link waves-effect" >
+                  <i class="fas fa-user"></i> 로그아웃
+                </a>
+              </li>
+          
+            {%- else -%}
+            <ul class="navbar-nav nav-flex-icons">
+              <li class="nav-item">
+                <a href="#" id="btnSignin" class="nav-link waves-effect" data-toggle="modal" 
+                data-target="#loginModal">
+                  <i class="fas fa-key"></i> 로그인
+                  
+                </a>
+              </li>
+  
+            <ul class="navbar-nav nav-flex-icons">
+              <li class="nav-item">
+                <a href="#" id="btnSignin" class="nav-link waves-effect" data-toggle="modal" 
+                data-target="#registerModal">
+                  <i class="fas fa-user"></i> 회원가입
+                </a>
+              </li>
+  
+            
+              {%- endif -%}
+              
+
+            <ul class="navbar-nav nav-flex-icons">
+              <li class="nav-item">
+                <a href="customerService.html" class="nav-link waves-effect">
+                  <i class="fas fa-phone-alt"></i> 고객센터
+                </a>
+              </li>
+
+            <!-- <li class="nav-item">
+              <a href="https://www.instagram.com/" class="nav-link waves-effect" target="_blank">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </li> -->
+            <li class="nav-item">
+              <a href="https://github.com/Project2-6/cbnu_pyweb" class="nav-link border border-light rounded waves-effect"
+                target="_blank">
+                <i class="fab fa-github mr-2"></i>Fooding GitHub
+              </a>
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+    </nav>
+    <!-- Navbar -->
+
+  </header>
+  <!--Main Navigation-->
+
+  <!--Main layout-->
+  <div class="container">
+  <main class="mt-5 pt-5">
+    
+ <!--logo-->
+ <div class ="text-center">
+   <div style= padding-top:50px;>
+      <a href="home.html">
+        <img src="../static/img/f_logo.png" alt="logo">
+      </a>
+   </div>
+</div>
+<!--logo-->
+
+  <div style="margin-bottom: 50px; float: right">
+    <a>
+      <i class="fas fa-toggle-off fa-3x" style="margin-right: 75px;"></i>
+    </a>
+    <br>
+
+    <h5><strong>위치서비스 </strong></h5>
+    <!-- <i class="fas fa-toggle-on fa-3x"></i> -->
+ </div>
+
+ <br>
+ <br>
+
+
+<!-- 검색창 -->
+
+<div class="input-group mb-3 input-group-lg">
+    <input type="text" class="form-control" placeholder="레시피를 검색해주세요!" aria-label="Recipient's username"
+      aria-describedby="button-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-md btn-outline-default m-0 px-5 py-2 z-depth-0 waves-effect" type="button" id="button-addon2" onclick="location.href='result.html'">검색</button>
+    </div>
+  </div>
+
+
+<!-- 검색창 밑에 추천 해시태그  -->
+
+	<div class="main-mostKeyword-wrap">
+           <ul id="mostKeywords" class="main-mostKeyword-list">
+           <li><a class="most-keyword-item" href="javascript:void(0);">#서울평창동</a></li>
+							<li><a class="most-keyword-item" href="javascript:void(0);">#인천부평동</a></li>
+							<li><a class="most-keyword-item" href="javascript:void(0);">#대구삼덕동</a></li>
+							<li><a class="most-keyword-item" href="javascript:void(0);">#부산좌천동</a></li>
+							<li><a class="most-keyword-item" href="javascript:void(0);">#제주연동</a></li>   
+						</ul>
+ </div>
+ 
+<br>
+<br>
+
+
+      <!-- <hr class="my-5"> -->
+
+      <!--Section: Magazine v.1-->
+      <section id="magazine" class="wow fadeIn">
+
+        <!-- 음식 음식점 추천 결과 -->
+        <div class="row">
+            <div class="col-md-6 mb-5">
+              <h3># 음식</h3>
+              <div class="card h-150">
+                <a href="#" >
+                    <div class="row" style="padding: 10px;">
+                        <div class="col-md-5">
+                            <img class="card-img-top" src="../static/img/food/food_3.jpg" alt="" width="100px"  >
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h4 class="card-title">#남한산성</h4>
+                                <p class="card-text">제육볶음</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 10px;">
+                        <div class="col-md-5">
+                            <img class="card-img-top" src="../static/img/food/food_3.jpg" alt="" width="100px"  >
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h4 class="card-title">#남한산성</h4>
+                                <p class="card-text">제육볶음</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 10px;">
+                        <div class="col-md-5">
+                            <img class="card-img-top" src="../static/img/food/food_3.jpg" alt="" width="100px"  >
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h4 class="card-title">#남한산성</h4>
+                                <p class="card-text">제육볶음</p>
+                            </div>
+                        </div>
+                    </div>
+        
+
+
+                </a>
+              </div>
+            </div>
+            <br>
+            <div class="col-md-6 mb-5">
+              <h3># 음식점</h3>
+              <div class="card h-150">
+                <a href="#" >
+                    <div class="row" style="padding: 10px;">
+                        <div class="col-md-5">
+                            <img class="card-img-top" src="../static/img/food/food_3.jpg" alt="" width="100px"  >
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h4 class="card-title">#남한산성</h4>
+                                <p class="card-text">제육볶음</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 10px;">
+                        <div class="col-md-5">
+                            <img class="card-img-top" src="../static/img/food/food_3.jpg" alt="" width="100px"  >
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h4 class="card-title">#남한산성</h4>
+                                <p class="card-text">제육볶음</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 10px;">
+                        <div class="col-md-5">
+                            <img class="card-img-top" src="../static/img/food/food_3.jpg" alt="" width="100px"  >
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h4 class="card-title">#남한산성</h4>
+                                <p class="card-text">제육볶음</p>
+                            </div>
+                        </div>
+                    </div>
+        
+
+
+
+                </a>
+              </div>
+            </div>
+        </div>
+          <br>
+<!-- 음식 음식점 추천 결과 -->
+
+</script>
+
+<!-- 검색량, 태그수 결과 그래프 -->
+<h3># 검색량 그래프</h3> 
+<script src="resultg.js"> </script>       
+     <!--<div class="card h">
+         <a href="#" >
+            <div>
+                <script src="resultg.js"> </script>
+            </div>        
+        </a>
+              </div>
+            <br>
+            -->
+<!--<h3># 태그수 그래프</h3>
+ <div class="card h">
+    <a href="#" >
+        <p>
+            <script src="resultg.js"> </script>
+        </p> 
+    </a>
+</div>
+          <br> 
+
+-->
+
+ <!-- 검색량, 태그수 결과 그래프 -->
+
+
+      </section>
+      <!--/Section: Magazine v.1-->
+
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class>
+    <div class="row">
+      <div class="col-xs-4 text-center">
+        <div style="padding: 0px 200px 0px 100px;">
+          <img src="../static/img/f_flogo.png" alt="footer" width="90%">
+        </div>
+      </div>
+      <div class="col-xs-8">
+        <div style="padding: 10px 0px 0px 100px;">
+          <p> Team Name: 성수대교 (김성수, 박혜영, 정원재) </p>
+          <p> Team Leader Number: 010-4847-5806 </p>
+          <p> Address: 충북 청주시 서원구 충대로1 충북대학교 전자정보대학 소프트웨어학과 S4-1동 </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--/.Footer-->
+
+<!-- login_Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLable"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="loginModalLable"><strong><i class="fas fa-sign-in-alt"></i> 로그인</strong></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Default form login -->
+<form class="text-center border border-light p-5" action="/login" method="POST">
+
+  <p class="h4 mb-4">로그인</p>
+
+  <!-- Id -->
+  <input type="text" name="userId" class="form-control mb-4" placeholder="아이디">
+
+  <!-- Password -->
+  <input type="password" name="userPassword" class="form-control mb-4" placeholder="비밀번호">
+
+  <div class="d-flex justify-content-around">
+      <div>
+          <!-- Remember me -->
+          <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+              <label class="custom-control-label" for="defaultLoginFormRemember">아이디 저장</label>
+          </div>
+      </div>
+      <div>
+          <!-- Forgot password -->
+          <a href="">비밀번호 찾기</a>
+      </div>
+  </div>
+
+  <!-- Sign in button -->
+  <button class="btn btn-info btn-block my-4" type="submit">로그인</button>
+
+  <!-- Register -->
+  <p>
+      <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#registerModal">회원가입</a>
+  </p>
+
+  <!-- Social login -->
+  <p>다른 서비스로 로그인</p>
+
+  <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
+  <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
+  <a href="#" class="mx-2" role="button"><i class="fab fa-instagram light-blue-text"></i></a>
+  <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
+
+</form>
+<!-- Default form login -->
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- register_Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="registerModalLabel"><strong><i class="fas fa-sign-in-alt"></i> 회원가입</strong></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Default form login -->
+<!-- register form-->
+<form action="/register" method="POST">
+  <!-- 2 column grid layout with text inputs for the first and last names -->
+  <!-- ID input -->
+  <div class="form-outline mb-4">
+    <input type="text" name="userId" class="form-control" />
+    <label class="form-label" for="form3Example3">아이디</label>
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+    <input type="password" name="userPassword" class="form-control" />
+    <label class="form-label" for="form3Example4">비밀번호</label>
+  </div>
+
+  <!-- Name input -->
+  <div class="form-outline mb-4">
+    <input type="text" name="userName" class="form-control" />
+    <label class="form-label" for="form3Example4">이름</label>
+  </div>
+
+ <!-- Birthday input -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="form-outline mb-4">
+        <input type="text" name="yy" placeholder="년(4자)" aria-label="년(4자)" class="form-control" maxlength="4">
+        <label class="form-label" for="form3Example4">생년월일</label>
+    </div>
+    </div>
+    <div class="col">
+      <div class="form-outline mb-4">
+            <select name="mm" class="form-control" aria-label="월">
+              <option value="">월</option>
+                         <option value="01">
+                                                      1
+                                                  </option>
+                         <option value="02">
+                                                      2
+                                                  </option>
+                         <option value="03">
+                                                      3
+                                                  </option>
+                         <option value="04">
+                                                      4
+                                                  </option>
+                         <option value="05">
+                                                      5
+                                                  </option>
+                         <option value="06">
+                                                      6
+                                                  </option>
+                         <option value="07">
+                                                      7
+                                                  </option>
+                         <option value="08">
+                                                      8
+                                                  </option>
+                         <option value="09">
+                                                      9
+                                                  </option>
+                         <option value="10">
+                                                      10
+                                                  </option>
+                         <option value="11">
+                                                      11
+                                                  </option>
+                         <option value="12">
+                                                      12
+                                                  </option>
+            </select>
+    </div>
+    </div>
+    <div class="col">
+      <div class="form-outline mb-4">
+        <input type="text" name="dd" placeholder="일" aria-label="일" class="form-control" maxlength="2">
+    </div>
+    </div>
+  </div>
+
+<!-- gender input -->
+<div class="form-outline mb-4">
+        <select name="gender" class="form-control" aria-label="성별">
+            <option value="" selected="">성별</option>
+                    <option value="M">남자</option>
+                    <option value="F">여자</option>
+                    <option value="U">선택 안함</option>
+        </select>
+        <label class="form-label">성별</label>
+</div>
+
+  
+
+  <!-- Email input -->
+  <div class="form-outline mb-4">
+    <input type="text" name="email" class="form-control" />
+    <label class="form-label" for="form3Example3">이메일 주소</label>
+  </div>
+
+  <!-- PhonNo input -->
+  <div class="form-outline mb-4">
+        <input type="tel" name="phoneNo" placeholder="전화번호 입력" aria-label="전화번호 입력" class="form-control" maxlength="16">
+        <label class="form-label">휴대전화</label>
+  </div>
+
+  <!-- Checkbox -->
+  <!-- <div class="form-check d-flex justify-content-center mb-4">
+    <input
+      class="form-check-input me-2"
+      type="checkbox"
+      value=""
+      id="form2Example3"
+      checked
+    />
+    <label class="form-check-label" for="form2Example3">
+      Subscribe to our newsletter
+    </label>
+  </div> -->
+
+  <!-- Submit button -->
+  <button class="btn btn-info btn-block my-4" type="submit">가입하기</button>
+
+
+  <!-- Register buttons -->
+  <div class="text-center">
+  <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
+  <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
+  <a href="#" class="mx-2" role="button"><i class="fab fa-instagram light-blue-text"></i></a>
+  <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
+</div>
+  <!-- <div class="text-center">
+    <p>or sign up with:</p>
+    <button type="button" class="btn btn-primary btn-floating mx-1">
+      <i class="fab fa-facebook-f"></i>
+    </button>
+
+    <button type="button" class="btn btn-primary btn-floating mx-1">
+      <i class="fab fa-google"></i>
+    </button>
+
+    <button type="button" class="btn btn-primary btn-floating mx-1">
+      <i class="fab fa-twitter"></i>
+    </button>
+
+    <button type="button" class="btn btn-primary btn-floating mx-1">
+      <i class="fab fa-github"></i>
+    </button>
+  </div> -->
+</form>
+<!--register form-->
+<!--register form-->
+
+</div>
+</div>
+</div>
+</div>
+<!--register modal-->
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="../static/js/jquery-3.4.1.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="../static/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="../static/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="../static/js/mdb.min.js"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+
+    // $(document).ready
+    // $('#basicExampleModal').modal('show');
+  </script>
+
+  
+</body>
+
+</html>
