@@ -12,6 +12,7 @@ def create_app():
     from .views import main_views, rank_views, home_views, rec_views
     from .views import customerService_views, talk_views, recipe_views
     from .views import register_views, login_views, logout_views
+    from .views import result_views
 
     app.register_blueprint(main_views.bp)
     app.register_blueprint(rank_views.bp)
@@ -23,6 +24,8 @@ def create_app():
     app.register_blueprint(register_views.bp)
     app.register_blueprint(login_views.bp)
     app.register_blueprint(logout_views.bp)
+    app.register_blueprint(logout_views.bp)
+    app.register_blueprint(result_views.bp)
 
     app.config.update(
         SECRET_KEY = 'X1243yRH!mMwf', #암호화 키

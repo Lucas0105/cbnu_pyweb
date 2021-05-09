@@ -31,3 +31,6 @@ def customerService():
 def rogin():
     return redirect(url_for('rogin.rogin'))
 
+@bp.route('/result')
+def result():
+    return redirect(url_for('result.result'))
