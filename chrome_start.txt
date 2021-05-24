@@ -1,0 +1,6 @@
+chrome 서버 실행
+cd "C:\Program Files (x86)\Google\Chrome\Application" 
+chrome.exe --remote-debugging-port=9222 --user-data-dir="C:/Chrome_debug_temp"
+
+현재 상태 체크
+netstat -ano | findstr 9222

@@ -1,7 +1,7 @@
 import datetime
 import time
 import re
-
+import random
 ######### 함수 #########
 # 함수 작성
 def insta_searching(word) : 
@@ -11,7 +11,7 @@ def insta_searching(word) :
 def select_first(driver):
     first = driver.find_element_by_css_selector('div._9AhH0') # 요소 찾기
     first.click()
-    time.sleep(3) #로딩 3초
+    time.sleep(2) #로딩 3초
 
 #본문 내용, 작성 일시, 위치 정보 및 해시태그(#) 추출
 def get_content(driver):
@@ -47,44 +47,68 @@ def get_content(driver):
 
 # 다음 게시물로 이동
 def move_next(driver):
+    second = random.random()
     right = driver.find_element_by_css_selector('a._65Bje.coreSpriteRightPaginationArrow')
     right.click()
+    time.sleep(2.5 + second)
+
+def login(ID,PW):    
+    chrome_options = Options()
+    chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+    driver = webdriver.Chrome("./chromedriver.exe", options=chrome_options)
+
+    driver.get("https://instagram.com")
+    time.sleep(2)
+    #로그인 하기
+    login_section = '//*[@id="loginForm"]'
+    driver.find_element_by_xpath(login_section).click()
+    time.sleep(1)
+    elem_login = driver.find_element_by_name("username")
+    elem_login.clear()
+    elem_login.send_keys(ID)
+    elem_login = driver.find_element_by_name('password')
+    elem_login.clear()
+    elem_login.send_keys(PW)
+    time.sleep(1)
+    xpath = '//*[@id="loginForm"]/div/div[3]/button'
+    driver.find_element_by_xpath(xpath).click()
     time.sleep(3)
+
+    return driver
+
+def seclogin():
+    chrome_options = Options()
+    chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+    driver = webdriver.Chrome("./chromedriver.exe", options=chrome_options)
+    
+    return driver
+
 
 ############### 본문 #############
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import time
 import re
 import pandas as pd
 
-driver = webdriver.Chrome("./chromedriver.exe")
+
+id = 'dnjswo105@gmail.com'
+pw = 'qlqjs753951!'
+
+driver = seclogin()
+# driver = login(id, pw)
+
 word = input("테그 이름을 입력해 주세요.")
 url = insta_searching(word)
-driver.get(url)
-time.sleep(2)
-#로그인 하기
-login_section = '//*[@id="loginForm"]'
-driver.find_element_by_xpath(login_section).click()
-time.sleep(1)
-elem_login = driver.find_element_by_name("username")
-elem_login.clear()
-elem_login.send_keys('01045120325')
-elem_login = driver.find_element_by_name('password')
-elem_login.clear()
-elem_login.send_keys('qlqjs753951!')
-time.sleep(1)
-xpath = '//*[@id="loginForm"]/div/div[3]/button'
 
-driver.find_element_by_xpath(xpath).click()
-time.sleep(4)
-xpath1 = """//*[@id="react-root"]/section/main/div/div/div/div/button"""
-driver.find_element_by_xpath(xpath1).click()
-time.sleep(1)
+# xpath1 = """//*[@id="react-root"]/section/main/div/div/div/div/button"""
+# driver.find_element_by_xpath(xpath1).click()
+# time.sleep(1)
 
 #3. 검색페이지 점속
 driver.get(url)
-time.sleep(10)
+time.sleep(6)
 
 #4. 첫번째 게시글 열기
 select_first(driver)
