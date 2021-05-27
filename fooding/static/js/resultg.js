@@ -1,6 +1,6 @@
 
 // 2. Use the margin convention practice 
-var margin = {top: 50, right: 800, bottom: 50, left: 800}
+var margin = {top: 50, right: 500, bottom: 50, left: 50}
   , width = 1000 // Use the window's width 
   , height = 300 // Use the window's height
 
