@@ -224,12 +224,12 @@
 
 
 <!-- 검색창 -->
-<form action="/result" method="GET">
+<form action="/result" method="POST">
 <div class="input-group mb-3 input-group-lg">
-  <input type="text" class="form-control" placeholder="먹고싶은 음식을 검색해보세요!" aria-label="Recipient's username"
+  <input name="search" type="text" class="form-control" placeholder="먹고싶은 음식을 검색해보세요!" aria-label="Recipient's username"
     aria-describedby="button-addon2">
   <div class="input-group-append">
-    <button class="btn btn-md btn-outline-default m-0 px-5 py-2 z-depth-0 waves-effect" type="submit" id="button-addon2">검색</button>
+    <button class="btn btn-md btn-outline-default m-0 px-5 py-2 z-depth-0 waves-effect" type="submit">검색</button>
   </div>
 </div>
 </form>
