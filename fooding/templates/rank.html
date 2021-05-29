@@ -78,6 +78,20 @@ footer {
     padding: 30px;
     font-size : 12px;
     }
+.map-responsive{
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+}
+
+.map-responsive iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+}   
 
 
 </style>
@@ -567,25 +581,25 @@ footer {
     // $(document).ready
     // $('#basicExampleModal').modal('show');
   </script>
-
+</div>
     <!--Footer-->
-    <footer class>
-      <div class="row">
-        <div class="col-xs-4 text-center">
-          <div style="padding: 0px 200px 0px 100px;">
-            <img src="../static/img/f_flogo.png" alt="footer" width="90%">
-          </div>
-        </div>
-        <div class="col-xs-8">
-          <div style="padding: 10px 0px 0px 100px;">
-            <p> Team Name: 성수대교 (김성수, 박혜영, 정원재) </p>
-            <p> Team Leader Number: 010-4847-5806 </p>
-            <p> Address: 충북 청주시 서원구 충대로1 충북대학교 전자정보대학 소프트웨어학과 S4-1동 </p>
-          </div>
+  <footer class>
+    <div class="row">
+      <div class="col-xs-4 text-center">
+        <div style="padding: 0px 200px 0px 100px;">
+          <img src="../static/img/f_flogo.png" alt="footer" width="90%">
         </div>
       </div>
-    </footer>
-    <!--/.Footer-->
+      <div class="col-xs-8">
+        <div style="padding: 10px 0px 0px 100px;">
+          <p> Team Name: 성수대교 (김성수, 박혜영, 정원재) </p>
+          <p> Team Leader Number: 010-4847-5806 </p>
+          <p> Address: 충북 청주시 서원구 충대로1 충북대학교 전자정보대학 소프트웨어학과 S4-1동 </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--/.Footer-->
 </body>
 
 </html>
