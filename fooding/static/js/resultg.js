@@ -1,6 +1,6 @@
 
 // 2. Use the margin convention practice 
-var margin = {top: 50, right: 500, bottom: 50, left: 450}
+var margin = {top: 50, right: 500, bottom: 50, left: 550}
   , width = 1000 // Use the window's width 
   , height = 300 // Use the window's height
 
@@ -28,10 +28,18 @@ var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() }
 
 // svg 생성
 var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+.attr("width", "45%")
+.attr("height", "50%")
+.attr("viewBox", "0 0 1000 500")
+.attr("preserveAspectRatio", "none")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+  .append("g");   
+ 
+    // .attr("width", width + margin.left + margin.right)
+    // .attr("height", height + margin.top + margin.bottom)
+    // .append("g")
+    // .attr("preserveAspectRatio", "none")
+    // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
 
 // 3. 축생성

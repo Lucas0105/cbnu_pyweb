@@ -36,10 +36,7 @@
   <script src="https://code.jquery.com/jquery-latest.min.js" type="application/javascript"></script>
   <script type="application/javascript" src="https://zelkun.tistory.com/attachment/cfile8.uf@99BB7A3D5D45C065343307.js"></script>
 
-  <script src="https://d3js.org/d3.v5.min.js"></script>
 
-<!-- d3.js -->
-<script src="../static/js/resultg.js" charset="utf-8"></script>
 
 
 <style>
@@ -47,36 +44,45 @@
 
 
 .main-mostKeyword-list{
-  list-style:none;
-  display : flex;
-}
-
-.most-keyword-item{
-   margin-left : 105px;
-}
-
-
-.blue-text{
-  font-style:"배달의민족 주아"; 
-  font-weight :  bold;
-  font-size : 45px;
-  font-family:"배달의민족 주아";
-}
-
-.nav-item{
-  font-style:"배달의민족 주아"; 
-  font-weight :  bold;
-  font-size : 17px;
-  font-family:"배달의민족 주아";
-  margin-left : 30px;
-}
-
-footer {
-    background-color: #555;
-    color: white;
-    padding: 30px;
-    font-size : 12px;
+      list-style:none;
+      display : flex;
     }
+    
+    .most-keyword-item{
+       margin-left : 105px;
+    }
+    
+    
+    .blue-text{
+      font-style:"배달의민족 주아"; 
+      font-weight :  bold;
+      font-size : 45px;
+      font-family:"배달의민족 주아";
+    }
+    
+    .nav-item{
+      font-style:"배달의민족 주아"; 
+      font-weight :  bold;
+      font-size : 21px;
+      font-family:"배달의민족 주아";
+      margin-left : 30px;
+    }
+    .dropdown-menu{
+      margin-left : 30px;
+    }
+    .col{
+      font-style:"배달의민족 주아"; 
+      font-weight :  bold;
+      font-size : 21px;
+      font-family:"배달의민족 주아";
+      margin-left : 30px;
+    }
+    footer {
+        background-color: #555;
+        color: white;
+        padding: 30px;
+        font-size : 12px;
+        }
     
 .map-responsive{
 overflow:hidden;
@@ -92,7 +98,11 @@ height:100%;
 width:100%;
 position:absolute;
 }   
-
+#vis {
+  max-width: 960px;
+  height:  300px;
+  margin: 0 auto;
+}
 </style>
 
 <!-- d3.js -->
@@ -468,17 +478,17 @@ function fn_option(code, name){
 </script>
 
 <!-- 검색량, 태그수 결과 그래프 -->
-<div class="container">
+
 <h3># 감성분석</h3>
+<div class="container">
 <img src='../static/img/keyword.png' width = "500" class="img-fluid mx-auto d-block" alt="Responsive image"> 
 </div>
 
+<script src="https://d3js.org/d3.v5.min.js"></script>
 
-<div class="container">
+
 <h3># 검색량 그래프</h3> 
-<script src='../static/js/resultg.js' > </script>    
-</div>
-
+<script src='../static/js/resultg.js?var=12' charset="utf-8"> </script>    
      <!--<div class="card h">
          <a href="#" >
             <div>
